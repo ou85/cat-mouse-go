@@ -42,7 +42,7 @@ func main() {
 	// Create a ticker that triggers every 5 seconds
 	// ticker := time.NewTicker(5 * time.Second)
 
-	// Create a ticker that triggers every 0.5 seconds
+	// Create a ticker that triggers every `t` seconds
 	t := 0.3
 	ticker := time.NewTicker(time.Duration(t * float64(time.Second)))
 	defer ticker.Stop()
