@@ -16,6 +16,8 @@
 			WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
 				go.run(result.instance);
 				drawCircle();
+			}).catch(err => {
+				console.error("Error loading WebAssembly:", err);
 			});
 		</script>
 	</body>
