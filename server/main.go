@@ -10,7 +10,7 @@ func main() {
 	http.Handle("/", fs)
 
 	log.Println("\nServer runs on http://localhost:8080")
-	err := http.ListenAndServe(":8081", nil)
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,13 +1,61 @@
-body {
+html {
+    height: 100%;
+    margin: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    background-color: #000;
+    font: 100%/1.5 'Avenir Next', 'Hiragino Sans', sans-serif;
+}
+
+header {
+    width: 100%;
+    background-color: #000;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    color: #fc9867;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+body {
+    font-size: 1.5rem;
+    display: flex;
     align-items: center;
+    justify-content: center;
     height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
+    background-color: #000;
+    color: rgb(210, 242, 210);
+    font-family: monospace;
+    overflow: hidden;
+    line-height: 1.1rem;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4rem; 
 }
 
 canvas {
-    border: 1px solid black;
+    border: 1px solid #ff6188;
     border-radius: 15px;
+    padding: .5rem;
+}
+
+a, a:visited {
+    color: #ffd866;
+    text-decoration: none;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    border: 1px solid #ff6188;
+    border-radius: 15px;
+    padding: 1rem;
 }

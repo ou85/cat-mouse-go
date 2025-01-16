@@ -21,6 +21,7 @@ Documents/
 ## Build WebAssembly
 
 ```bash
+cd cat-mouse-go
 GOOS=js GOARCH=wasm go build -o assets/main.wasm src/main.go
 ```
 
