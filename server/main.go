@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("../assets"))
+	fs := http.FileServer(http.Dir("../static"))
 	http.Handle("/", fs)
 
 	log.Println("\nServer runs on http://localhost:8080")

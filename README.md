@@ -22,7 +22,7 @@ Documents/
 
 ```bash
 cd cat-mouse-go
-GOOS=js GOARCH=wasm go build -o assets/main.wasm src/main.go
+GOOS=js GOARCH=wasm go build -o static/circles.wasm src/circles/main.go
 ```
 
 ## Run Server
