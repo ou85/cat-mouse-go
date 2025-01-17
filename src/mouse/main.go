@@ -39,13 +39,6 @@ func NewGame() *Game {
 		Mouse:   NewMouse(width, height),
 		Cat:     NewCat(width, height),
 	}
-	// game := &Game{
-
-	// 	House: NewHouse(),
-	// 	Mouse: NewMouse(),
-	// 	Cat:   NewCat(),
-	// }
-	// game.initCanvas()
 	game.spawnCat()
 	return game
 }

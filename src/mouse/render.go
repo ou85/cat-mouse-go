@@ -4,13 +4,6 @@ import (
 	"math"
 )
 
-// func (g *Game) initCanvas() {
-// 	g.Canvas = js.Global().Get("document").Call("getElementById", "myCanvas")
-// 	g.Context = g.Canvas.Call("getContext", "2d")
-// 	g.Width = g.Canvas.Get("width").Int()
-// 	g.Height = g.Canvas.Get("height").Int()
-// }
-
 func (g *Game) render() {
 	g.Context.Call("clearRect", 0, 0, g.Width, g.Height)
 	g.Context.Set("font", "24px Arial")
