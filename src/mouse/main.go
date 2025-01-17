@@ -311,9 +311,12 @@ func (g *Game) update() {
 func (g *Game) render() {
 	g.Context.Call("clearRect", 0, 0, g.Width, g.Height)
 	g.Context.Set("font", "24px Arial")
-	g.Context.Call("fillText", "🏠", g.House.X-HouseSize/2, g.House.Y-HouseSize/2)
-	g.Context.Call("fillText", "🐱", g.Cat.X, g.Cat.Y)
-	g.Context.Call("fillText", "🐭", g.Mouse.X, g.Mouse.Y)
+	// g.Context.Call("fillText", "🏠", g.House.X-HouseSize/2, g.House.Y-HouseSize/2)
+	// g.Context.Call("fillText", "🐱", g.Cat.X, g.Cat.Y)
+	// g.Context.Call("fillText", "🐭", g.Mouse.X, g.Mouse.Y)
+	g.Context.Call("fillText", "🏠", g.House.X-12, g.House.Y+8)
+	g.Context.Call("fillText", "🐱", g.Cat.X-12, g.Cat.Y+8)
+	g.Context.Call("fillText", "🐭", g.Mouse.X-12, g.Mouse.Y+8)
 
 	// Draw safe circle around the house
 	g.Context.Call("beginPath")
