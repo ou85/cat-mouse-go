@@ -21,7 +21,9 @@ var (
 	targetX float64
 	targetY float64
 	speed   float64 = 2.0
-	catSize float64 = 24.0 // Size of the cat emoji
+	catSize float64 = 24.0
+	mouseX  float64
+	mouseY  float64
 )
 
 func getRandomPosition(max int) float64 {
@@ -44,16 +46,24 @@ func moveCat(this js.Value, p []js.Value) interface{} {
 		catY += dy / distance * speed
 	}
 
-	// Clear the canvas and draw the cat at the new position
+	// Clear the canvas and draw the cat and mouse at the new positions
 	context.Call("clearRect", 0, 0, width, height)
 	context.Call("fillText", "🐱", catX, catY)
+	context.Call("fillText", "🐭", mouseX, mouseY)
 
 	return nil
 }
 
+func mouseMoveHandler(this js.Value, args []js.Value) interface{} {
+	boundingRect := canvas.Call("getBoundingClientRect")
+	mouseX = args[0].Get("clientX").Float() - boundingRect.Get("left").Float()
+	mouseY = args[0].Get("clientY").Float() - boundingRect.Get("top").Float()
+	return nil
+}
+
 func main() {
-	fmt.Println("Hello from the Cat!")
-	js.Global().Get("console").Call("log", "Hello from Cat WebAssembly!")
+	fmt.Println("Hello from the Cat and Mouse!")
+	js.Global().Get("console").Call("log", "Hello from Cat and Mouse WebAssembly!")
 
 	// Initialize a new random number generator
 	rng = rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -66,7 +76,7 @@ func main() {
 	width = canvas.Get("width").Int()
 	height = canvas.Get("height").Int()
 
-	// Set font size for the cat emoji
+	// Set font size for the cat and mouse emojis
 	context.Set("font", "24px serif")
 
 	// Initialize cat position and target position
@@ -74,6 +84,9 @@ func main() {
 	catY = getRandomPosition(height)
 	targetX = getRandomPosition(width)
 	targetY = getRandomPosition(height)
+
+	// Add event listener for mouse movements
+	js.Global().Get("document").Call("addEventListener", "mousemove", js.FuncOf(mouseMoveHandler))
 
 	// Move the cat emoji every 16 milliseconds (approximately 60 FPS)
 	js.Global().Call("setInterval", js.FuncOf(moveCat), 16)
