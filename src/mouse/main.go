@@ -7,6 +7,7 @@ import (
 	"math"
 	"math/rand"
 	"syscall/js"
+	"time"
 )
 
 // Settings
@@ -21,10 +22,9 @@ type Game struct {
 	Width   int
 	Height  int
 
-	Cat      Entity
-	Mouse    Entity
-	House    Entity
-	CatAngle float64
+	Cat   Entity
+	Mouse Entity
+	House Entity
 }
 
 func NewGame() *Game {
@@ -47,9 +47,14 @@ func NewGame() *Game {
 }
 
 func (g *Game) spawnCat() {
-	g.Cat.X = rand.Float64()*(float64(g.Width)-40) + 20
-	g.Cat.Y = rand.Float64()*(float64(g.Height)-40) + 20
-	g.CatAngle = math.Atan2(g.Cat.Y-g.House.Y, g.Cat.X-g.House.X)
+	time.AfterFunc(5*time.Second, func() {
+		g.Cat.Active = true
+
+		g.Cat.X = rand.Float64()*(float64(g.Width)-40) + 20
+		g.Cat.Y = rand.Float64()*(float64(g.Height)-40) + 20
+		g.Cat.Angle = math.Atan2(g.Cat.Y-g.House.Y, g.Cat.X-g.House.X)
+
+	})
 }
 
 // Game Logic
@@ -81,18 +86,18 @@ func (g *Game) circleAroundHouse() {
 	radius := HouseSize
 
 	// Calculate the initial angle, if the cat has just started circling around.
-	if g.CatAngle == 0 {
+	if g.Cat.Angle == 0 {
 		dx := g.Cat.X - g.House.X
 		dy := g.Cat.Y - g.House.Y
-		g.CatAngle = math.Atan2(dy, dx)
+		g.Cat.Angle = math.Atan2(dy, dx)
 	}
 
 	// Increment the angle
-	g.CatAngle = math.Mod(g.CatAngle+0.01, 2*math.Pi)
+	g.Cat.Angle = math.Mod(g.Cat.Angle+0.01, 2*math.Pi)
 
 	// Calculate the new position
-	g.Cat.X = g.House.X + math.Cos(g.CatAngle)*(radius+20)
-	g.Cat.Y = g.House.Y + math.Sin(g.CatAngle)*(radius+20)
+	g.Cat.X = g.House.X + math.Cos(g.Cat.Angle)*(radius+20)
+	g.Cat.Y = g.House.Y + math.Sin(g.Cat.Angle)*(radius+20)
 }
 
 func (g *Game) updateCatMovement() {
@@ -113,7 +118,6 @@ func (g *Game) updateCatMovement() {
 }
 
 func (g *Game) constrainToBounds(e *Entity) {
-	// const emojiSize = 24.0
 	halfSize := EmojiSize / 2
 
 	e.X = math.Max(halfSize, math.Min(float64(g.Width)-halfSize, e.X))
@@ -151,8 +155,10 @@ func (g *Game) render() {
 
 	// Draw the entities
 	g.Context.Call("fillText", "🏠", g.House.X-12, g.House.Y+8)
-	g.Context.Call("fillText", "🐱", g.Cat.X-12, g.Cat.Y+8)
 	g.Context.Call("fillText", "🐭", g.Mouse.X-12, g.Mouse.Y+8)
+	if g.Cat.Active {
+		g.Context.Call("fillText", g.Cat.Emoji, g.Cat.X-12, g.Cat.Y+8)
+	}
 }
 
 // Event Handlers

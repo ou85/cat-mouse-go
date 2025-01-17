@@ -2,7 +2,6 @@ package main
 
 import "math/rand"
 
-// Константы
 const (
 	EmojiSize        = 24.0
 	CatSpeed         = 2.0
@@ -13,7 +12,6 @@ const (
 	AirplaneDuration = 5000 // Milliseconds
 )
 
-// Entity - общая структура для всех объектов
 type Entity struct {
 	X, Y      float64
 	Speed     float64
@@ -30,7 +28,6 @@ type Entity struct {
 	Size       float64
 }
 
-// Создание мыши
 func NewMouse(canvasWidth, canvasHeight int) Entity {
 	return Entity{
 		X:      float64(canvasWidth) / 2,
@@ -41,18 +38,16 @@ func NewMouse(canvasWidth, canvasHeight int) Entity {
 	}
 }
 
-// Создание кошки
 func NewCat(canvasWidth, canvasHeight int) Entity {
 	return Entity{
 		X:      rand.Float64()*(float64(canvasWidth)-40) + 20,
 		Y:      rand.Float64()*(float64(canvasHeight)-40) + 20,
 		Speed:  CatSpeed,
 		Emoji:  "🐱",
-		Active: true,
+		Active: false,
 	}
 }
 
-// Создание домика
 func NewHouse(canvasWidth, canvasHeight int) Entity {
 	return Entity{
 		X:     float64(canvasWidth) / 2,
@@ -62,7 +57,6 @@ func NewHouse(canvasWidth, canvasHeight int) Entity {
 	}
 }
 
-// Создание сыра
 func NewCheese(canvasWidth, canvasHeight int) Entity {
 	return Entity{
 		X:     rand.Float64()*(float64(canvasWidth)-40) + 20,
@@ -71,7 +65,6 @@ func NewCheese(canvasWidth, canvasHeight int) Entity {
 	}
 }
 
-// Создание вишни
 func NewCherry() Entity {
 	return Entity{
 		Emoji:    "🍒",
@@ -80,7 +73,6 @@ func NewCherry() Entity {
 	}
 }
 
-// Создание самолета
 func NewAirplane(canvasWidth, canvasHeight int) Entity {
 	return Entity{
 		X:        float64(canvasWidth) / 2,
