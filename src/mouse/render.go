@@ -1,12 +1,20 @@
 package main
 
 import (
+	"fmt"
 	"math"
+	"syscall/js"
 )
 
 func (g *Game) render() {
 	g.Context.Call("clearRect", 0, 0, g.Width, g.Height)
 	g.Context.Set("font", "24px Arial")
+
+	scoreContainer := js.Global().Get("document").Call("getElementById", "score")
+	scoreContainer.Set("innerText", fmt.Sprintf("Score: %d", g.Score))
+
+	topScoreContainer := js.Global().Get("document").Call("getElementById", "topScore")
+	topScoreContainer.Set("innerText", fmt.Sprintf("Top: %d", g.TopScore))
 
 	// Create a radial gradient
 	gradient := g.Context.Call("createRadialGradient",
@@ -27,8 +35,9 @@ func (g *Game) render() {
 	g.Context.Call("stroke")
 
 	// Draw the entities
-	g.Context.Call("fillText", "🏠", g.House.X-12, g.House.Y+8)
-	g.Context.Call("fillText", "🐭", g.Mouse.X-12, g.Mouse.Y+8)
+	g.Context.Call("fillText", g.House.Emoji, g.House.X-12, g.House.Y+8)
+	g.Context.Call("fillText", g.Mouse.Emoji, g.Mouse.X-12, g.Mouse.Y+8)
+	g.Context.Call("fillText", g.Cheese.Emoji, g.Cheese.X-12, g.Cheese.Y+8)
 	if g.Cat.Active {
 		g.Context.Call("fillText", g.Cat.Emoji, g.Cat.X-12, g.Cat.Y+8)
 	}

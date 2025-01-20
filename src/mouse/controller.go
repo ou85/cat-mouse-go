@@ -18,6 +18,13 @@ func (g *Game) spawnCat() {
 	})
 }
 
+func (g *Game) spawnCheese() {
+	g.Mouse.X = rand.Float64()*(float64(g.Width)-40) + 20
+	g.Mouse.Y = rand.Float64()*(float64(g.Height)-40) + 20
+	g.Mouse.Timer = 0
+	g.Mouse.Active = true
+}
+
 func (g *Game) isInHouse(e Entity) bool {
 	dx := e.X - g.House.X
 	dy := e.Y - g.House.Y
@@ -96,4 +103,22 @@ func (g *Game) mouseMoveHandler(this js.Value, args []js.Value) interface{} {
 func (g *Game) initEventHandlers() {
 	js.Global().Get("document").Call("addEventListener", "mousemove", js.FuncOf(g.mouseMoveHandler))
 	js.Global().Call("setInterval", js.FuncOf(g.gameLoop), UpdateRate)
+}
+
+// Check for Mouse-Cheese collision
+func (g *Game) checkCheeseCollision() {
+	if g.checkCollision(g.Mouse, g.Cheese) {
+		g.Score++
+		if g.Score > g.TopScore {
+			g.TopScore = g.Score
+		}
+		g.Cheese = NewCheese(g.Width, g.Height)
+	}
+}
+
+func (g *Game) checkCollision(e1, e2 Entity) bool {
+	dx := e1.X - e2.X
+	dy := e1.Y - e2.Y
+	distance := math.Hypot(dx, dy)
+	return distance < EmojiSize
 }
