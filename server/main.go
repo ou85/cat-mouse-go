@@ -9,7 +9,11 @@ func main() {
 	fs := http.FileServer(http.Dir("../static"))
 	http.Handle("/", fs)
 
-	log.Println("\nServer runs on http://localhost:8080")
+	log.Println("========================================")
+	log.Println("🚀 Server is up and running!")
+	log.Println("🌐 Access it at: http://localhost:8080")
+	log.Println("========================================")
+
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal(err)
