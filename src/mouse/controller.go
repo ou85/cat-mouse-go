@@ -19,10 +19,25 @@ func (g *Game) spawnCat() {
 }
 
 func (g *Game) spawnCheese() {
-	g.Mouse.X = rand.Float64()*(float64(g.Width)-40) + 20
-	g.Mouse.Y = rand.Float64()*(float64(g.Height)-40) + 20
-	g.Mouse.Timer = 0
-	g.Mouse.Active = true
+	const safeRadius = HouseSize/2 + 32 // Safe radius around the house
+	var x, y float64
+
+	for {
+		// Generate a random position within the canvas boundaries
+		x = rand.Float64()*(float64(g.Width)-40) + 20
+		y = rand.Float64()*(float64(g.Height)-40) + 20
+
+		// Check if the position is outside the safe radius
+		dx := x - g.House.X
+		dy := y - g.House.Y
+		if math.Hypot(dx, dy) >= safeRadius {
+			break
+		}
+	}
+
+	g.Cheese.X = x
+	g.Cheese.Y = y
+	g.Cheese.Active = true
 }
 
 func (g *Game) isInHouse(e Entity) bool {

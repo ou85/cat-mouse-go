@@ -11,10 +11,10 @@ func (g *Game) render() {
 	g.Context.Set("font", "24px Arial")
 
 	scoreContainer := js.Global().Get("document").Call("getElementById", "score")
-	scoreContainer.Set("innerText", fmt.Sprintf("Score: %d", g.Score))
+	scoreContainer.Set("innerText", fmt.Sprintf("SCORE: %d", g.Score))
 
 	topScoreContainer := js.Global().Get("document").Call("getElementById", "topScore")
-	topScoreContainer.Set("innerText", fmt.Sprintf("Top: %d", g.TopScore))
+	topScoreContainer.Set("innerText", fmt.Sprintf("HIGH: %d", g.TopScore))
 
 	// Create a radial gradient
 	gradient := g.Context.Call("createRadialGradient",
