@@ -1,4 +1,4 @@
-// GOOS=js GOARCH=wasm go build -o static/mouse.wasm ./src/mouse
+// GOOS=js GOARCH=wasm go build -o mouse.wasm ./src/mouse
 
 package main
 
@@ -70,6 +70,6 @@ func main() {
 	game := NewGame()
 	game.initEventHandlers()
 
-	fmt.Println("Game started!")
+	fmt.Println("Game started!!!")
 	select {}
 }
