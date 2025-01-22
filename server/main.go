@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("../static"))
+	// fs := http.FileServer(http.Dir("../static"))
+	fs := http.FileServer(http.Dir("../"))
 	http.Handle("/", fs)
 
 	log.Println("========================================")
