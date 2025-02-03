@@ -7,29 +7,36 @@ MVC
 ```plaintext
 Documents/
 └── cat-mouse-go
-        ├── assets
-        │   ├── index.html          # Main page
-        │   ├── main.wasm           # WebAssembly file
-        │   └── wasm_exec.js        # Go runtime for WebAssembly
         ├── server 
-        │   └── main.go             # Web server Go
+        │   └── main.go             
         ├── src
-        │   └── main.go             # Source code
-        ├── .gitignore
+        │   ├── mouse                 # Cat and mouse
+        │   │   ├── controller.go
+        │   │   ├── entities.go
+        │   │   ├── main.go             
+        │   │   └── render.go        
+        │   └── random                # Random symbols
+        │       └── main.go          
+        ├── static
+        │   └── style.css        
         ├── go.mod
-        └── README.md
+        ├── index.html                # Main page
+        ├── mouse.wasm                # WebAssembly file
+        ├── random.html          
+        ├── README.md
+        └── wasm_exec.js              # Go runtime for WebAssembly
 ```
 
 ## Build WebAssembly
 
 ```bash
 cd cat-mouse-go
-GOOS=js GOARCH=wasm go build -o static/circles.wasm src/circles/main.go
+GOOS=js GOARCH=wasm go build -o mouse.wasm ./src/mouse
 ```
 
 ## Run Server
 
 ```bash
-cd src
+cd server
 go run main.go
 ```
