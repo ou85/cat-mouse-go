@@ -24,8 +24,10 @@ type Game struct {
 	House  Entity
 	Cheese Entity
 
-	Score    int
-	TopScore int
+	Score        int
+	TopScore     int
+	gameInterval js.Value
+	gameOver     bool
 }
 
 func NewGame() *Game {
@@ -52,11 +54,55 @@ func NewGame() *Game {
 }
 
 // Update and Render
+// func (g *Game) update() {
+// 	g.updateCatMovement()
+// 	g.constrainToBounds(&g.Cat)
+// 	g.constrainToBounds(&g.Mouse)
+
+// 	// Check if the Cat caught the Mouse.
+// 	if g.checkCollision(g.Cat, g.Mouse) {
+// 		g.endGame()
+// 		return
+// 	}
+
+// 	g.checkCheeseCollision()
+// }
+
 func (g *Game) update() {
+	if g.gameOver {
+		return
+	}
+
 	g.updateCatMovement()
 	g.constrainToBounds(&g.Cat)
 	g.constrainToBounds(&g.Mouse)
-	g.checkCheeseCollision()
+
+	// Only check collision if the cat is active.
+	if g.Cat.Active && g.checkCollision(g.Cat, g.Mouse) {
+		g.endGame()
+		return
+	}
+
+	// g.checkCheeseCollision()
+	if g.checkCollision(g.Mouse, g.Cheese) {
+		g.checkCheeseCollision()
+	}
+}
+
+// endGame stops the game loop and prompts a restart.
+func (g *Game) endGame() {
+	g.gameOver = true
+	js.Global().Call("clearInterval", g.gameInterval)
+}
+
+// Implement the restart logic via a keydown event handler.
+func (g *Game) handleRestart(_ js.Value, args []js.Value) interface{} {
+	event := args[0]
+	key := event.Get("key").String()
+	if g.gameOver && (key == "r" || key == "R") {
+		js.Global().Get("location").Call("reload")
+	}
+	return nil
 }
 
 func (g *Game) gameLoop(this js.Value, args []js.Value) interface{} {

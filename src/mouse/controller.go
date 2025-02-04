@@ -115,20 +115,43 @@ func (g *Game) mouseMoveHandler(this js.Value, args []js.Value) interface{} {
 }
 
 // Initialize Event Handlers
+//
+//	func (g *Game) initEventHandlers() {
+//		js.Global().Get("document").Call("addEventListener", "mousemove", js.FuncOf(g.mouseMoveHandler))
+//		js.Global().Call("setInterval", js.FuncOf(g.gameLoop), UpdateRate)
+//	}
+//
+// Initialize Event Handlers: Save the interval handle.
+// func (g *Game) initEventHandlers() {
+// 	js.Global().Get("document").Call("addEventListener", "mousemove", js.FuncOf(g.mouseMoveHandler))
+// 	g.gameInterval = js.Global().Call("setInterval", js.FuncOf(g.gameLoop), UpdateRate)
+// }
+
+// Ensure that the handleRestart function is used by adding a keydown listener in initEventHandlers.
 func (g *Game) initEventHandlers() {
 	js.Global().Get("document").Call("addEventListener", "mousemove", js.FuncOf(g.mouseMoveHandler))
-	js.Global().Call("setInterval", js.FuncOf(g.gameLoop), UpdateRate)
+	js.Global().Get("document").Call("addEventListener", "keydown", js.FuncOf(g.handleRestart))
+	g.gameInterval = js.Global().Call("setInterval", js.FuncOf(g.gameLoop), UpdateRate)
 }
 
 // Check for Mouse-Cheese collision
+// func (g *Game) checkCheeseCollision() {
+// 	if g.checkCollision(g.Mouse, g.Cheese) {
+// 		g.Score++
+// 		if g.Score > g.TopScore {
+// 			g.TopScore = g.Score
+// 		}
+// 		g.Cheese = NewCheese(g.Width, g.Height)
+// 	}
+// }
+
 func (g *Game) checkCheeseCollision() {
-	if g.checkCollision(g.Mouse, g.Cheese) {
-		g.Score++
-		if g.Score > g.TopScore {
-			g.TopScore = g.Score
-		}
-		g.Cheese = NewCheese(g.Width, g.Height)
+	g.Score++
+	if g.Score > g.TopScore {
+		g.TopScore = g.Score
 	}
+	g.Cheese = NewCheese(g.Width, g.Height)
+
 }
 
 func (g *Game) checkCollision(e1, e2 Entity) bool {
