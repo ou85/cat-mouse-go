@@ -53,21 +53,6 @@ func NewGame() *Game {
 	return game
 }
 
-// Update and Render
-// func (g *Game) update() {
-// 	g.updateCatMovement()
-// 	g.constrainToBounds(&g.Cat)
-// 	g.constrainToBounds(&g.Mouse)
-
-// 	// Check if the Cat caught the Mouse.
-// 	if g.checkCollision(g.Cat, g.Mouse) {
-// 		g.endGame()
-// 		return
-// 	}
-
-// 	g.checkCheeseCollision()
-// }
-
 func (g *Game) update() {
 	if g.gameOver {
 		return
@@ -83,7 +68,7 @@ func (g *Game) update() {
 		return
 	}
 
-	// g.checkCheeseCollision()
+	// Check if the mouse has reached the cheese.
 	if g.checkCollision(g.Mouse, g.Cheese) {
 		g.checkCheeseCollision()
 	}
