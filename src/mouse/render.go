@@ -41,6 +41,43 @@ func (g *Game) drawGameOver() {
 	g.Context.Call("fillText", restartText, restartX, restartY)
 }
 
+// Fetches the score_table.json file and renders the score table.
+func (g *Game) renderScoreTable() {
+	fetchPromise := js.Global().Call("fetch", "score_table.json")
+	thenFunc := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		response := args[0]
+		jsonPromise := response.Call("json")
+		thenJSON := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+			data := args[0]
+			// Sort the data array in descending order by score.
+			data = data.Call("sort", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+				a := args[0]
+				b := args[1]
+				return b.Get("score").Int() - a.Get("score").Int()
+			}))
+
+			// Build the HTML table.
+			tableHTML := "<table border='0' cellpadding='5' cellspacing='0'><caption>BEST EVER 10</caption><tbody>"
+			length := data.Length()
+			for i := 0; i < length; i++ {
+				entry := data.Index(i)
+				name := entry.Get("name").String()
+				score := entry.Get("score").Int()
+				tableHTML += fmt.Sprintf("<tr><td>%s</td><td style='text-align: right'>%d</td></tr>", name, score)
+			}
+			tableHTML += "</tbody></table>"
+
+			// Set the inner HTML of the scoreTable div.
+			scoreTableDiv := js.Global().Get("document").Call("getElementById", "scoreTable")
+			scoreTableDiv.Set("innerHTML", tableHTML)
+			return nil
+		})
+		jsonPromise.Call("then", thenJSON)
+		return nil
+	})
+	fetchPromise.Call("then", thenFunc)
+}
+
 func (g *Game) render() {
 	g.Context.Call("clearRect", 0, 0, g.Width, g.Height)
 	g.Context.Set("font", "24px Arial")
@@ -76,7 +113,12 @@ func (g *Game) render() {
 	}
 
 	// If game over, overlay the Game Over screen.
+	// if g.gameOver {
+	// 	g.drawGameOver()
+	// }
 	if g.gameOver {
 		g.drawGameOver()
+	} else {
+		g.renderScoreTable()
 	}
 }

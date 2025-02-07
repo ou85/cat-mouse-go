@@ -18,8 +18,10 @@
             <div id="topScore"></div>
         </div>
         <canvas id="myCanvas" width="600" height="600"></canvas>
+        <div id="scoreTable"></div>
     </main>
     <script src="wasm_exec.js"></script>
+    <!-- WebAssembly script -->
     <script>
         const go = new Go();
         WebAssembly.instantiateStreaming(fetch("mouse.wasm"), go.importObject).then((result) => {
