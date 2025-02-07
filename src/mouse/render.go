@@ -18,23 +18,23 @@ func (g *Game) drawGameOver() {
 	g.Context.Set("fillStyle", "white")
 
 	// Draw "GAME OVER" title.
-	g.Context.Set("font", "bold 48px")
+	g.Context.Set("font", "bold 48px 'Courier New', monospace")
 	titleX := float64(g.Width)/2 - 150
-	titleY := float64(g.Height) / 2.7
+	titleY := float64(g.Height) / 3.3
 	g.Context.Call("fillText", "GAME OVER", titleX, titleY)
 
 	// Draw current score.
-	g.Context.Set("font", "36px")
-	scoreText := fmt.Sprintf("Your Score: %d", g.Score)
-	g.Context.Call("fillText", scoreText, titleX, float64(g.Height)/2.5+70)
+	g.Context.Set("font", "30px 'Courier New', monospace")
+	scoreText := fmt.Sprintf("YOUR SCORE: %d", g.Score)
+	g.Context.Call("fillText", scoreText, titleX, float64(g.Height)/2.5+50)
 
 	// Draw best score.
-	highScoreText := fmt.Sprintf("Best Score: %d", g.TopScore)
-	g.Context.Call("fillText", highScoreText, titleX, float64(g.Height)/2.5+130)
+	highScoreText := fmt.Sprintf("BEST SCORE: %d", g.TopScore)
+	g.Context.Call("fillText", highScoreText, titleX, float64(g.Height)/2.5+90)
 
 	// Draw restart instruction.
-	g.Context.Set("font", "22px")
-	restartText := "To restart, press R"
+	g.Context.Set("font", "20px 'Courier New', monospace")
+	restartText := "press 'R' to restart"
 	// Center the text by calculating an approximate x position.
 	restartX := float64(g.Width)/2 - 150
 	restartY := float64(g.Height)/2.5 + 190
