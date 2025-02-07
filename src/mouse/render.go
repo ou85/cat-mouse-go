@@ -41,7 +41,7 @@ func (g *Game) drawGameOver() {
 	g.Context.Call("fillText", restartText, restartX, restartY)
 }
 
-// Fetches the score_table.json file and renders the score table.
+// Fetches the score_table.json file and renders the score table
 func (g *Game) renderScoreTable() {
 	fetchPromise := js.Global().Call("fetch", "score_table.json")
 	thenFunc := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
@@ -57,8 +57,11 @@ func (g *Game) renderScoreTable() {
 			}))
 
 			// Build the HTML table.
-			tableHTML := "<table border='0' cellpadding='5' cellspacing='0'><caption>BEST EVER 10</caption><tbody>"
+			tableHTML := "<table border='0' cellpadding='5' cellspacing='0'><caption>BEST EVER 5</caption><tbody>"
 			length := data.Length()
+			if length > 5 {
+				length = 5
+			}
 			for i := 0; i < length; i++ {
 				entry := data.Index(i)
 				name := entry.Get("name").String()
