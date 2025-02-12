@@ -1,10 +1,10 @@
 :root {
     --color-bg: #212122;
-    --color-cyan: #78dce8;
-    --color-yellow: #ffd866;
-    --color-green: #a9dc76;
-    --color-purple: #ab9df2;
     --color-pink: #ff6188;
+    --color-cyan: #78dce8;
+    --color-green: #a9dc76;
+    --color-yellow: #ffd866;
+    --color-purple: #ab9df2;
     --color-orange: #fc9867;
 }
 
@@ -17,9 +17,8 @@ html {
 
 header {
     width: 100%;
-    margin-top: 1rem;
     background-color: var(--color-bg);
-    padding: 1rem;
+    padding: 2rem 0 0 1rem;
     text-align: center;
     font-size: 1rem;
     color: var(--color-orange);
@@ -47,7 +46,6 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: .3rem; 
 }
 
 canvas {
@@ -108,9 +106,10 @@ pre {
 }
 
 .title {
-    font-family: 'SF Mono', monospace;
+    /* font-family: 'SF Mono', monospace; */
+    font-family: 'Yokawerad', serif;
     font-style: italic;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
 }
 

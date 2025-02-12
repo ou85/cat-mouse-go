@@ -18,13 +18,13 @@ func (g *Game) drawGameOver() {
 	g.Context.Set("fillStyle", "white")
 
 	// Draw "GAME OVER" title.
-	g.Context.Set("font", "bold 48px 'Courier New', monospace")
+	g.Context.Set("font", "bold 48px 'SF Mono', monospace")
 	titleX := float64(g.Width)/2 - 150
 	titleY := float64(g.Height) / 3.3
 	g.Context.Call("fillText", "GAME OVER", titleX, titleY)
 
 	// Draw current score.
-	g.Context.Set("font", "30px 'Courier New', monospace")
+	g.Context.Set("font", "24px 'SF Mono', monospace")
 	scoreText := fmt.Sprintf("YOUR SCORE: %d", g.Score)
 	g.Context.Call("fillText", scoreText, titleX, float64(g.Height)/2.5+50)
 
@@ -33,7 +33,7 @@ func (g *Game) drawGameOver() {
 	g.Context.Call("fillText", highScoreText, titleX, float64(g.Height)/2.5+90)
 
 	// Draw restart instruction.
-	g.Context.Set("font", "20px 'Courier New', monospace")
+	g.Context.Set("font", "20px 'SF Mono', monospace")
 	restartText := "press 'R' to restart"
 	// Center the text by calculating an approximate x position.
 	restartX := float64(g.Width)/2 - 150
