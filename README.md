@@ -1,5 +1,7 @@
 # Cat and Mouse
 
+[Try it](https://ou85.github.io/cat-mouse-go/)
+
 MVC
 
 ## Structure
