@@ -13,12 +13,11 @@ html {
     margin: 0;
     display: flex;
     flex-direction: column;
-    background-color: var(--color-bg);
-    font: 100%/1.5 'Avenir Next', 'Hiragino Sans', sans-serif;
 }
 
 header {
     width: 100%;
+    margin-top: 1rem;
     background-color: var(--color-bg);
     padding: 1rem;
     text-align: center;
@@ -30,17 +29,16 @@ header {
 }
 
 body {
+    font-family: 'SFMono', monospace;
     font-size: 1.5rem;
+    line-height: 1.1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
     margin: 0;
-    background-color: var(--color-bg);
-    color: rgb(210, 242, 210);
-    font-family: monospace;
     overflow: hidden;
-    line-height: 1.1rem;
+    background-color: var(--color-bg);
 }
 
 main {
@@ -49,7 +47,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem; 
+    margin-top: .3rem; 
 }
 
 canvas {
@@ -72,27 +70,29 @@ pre {
 }
 
 #scoreContainer {
+    font-family: 'SFMono', monospace;
+    color: var(--color-orange);
+    font-size: 1.1rem;
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     width: 600px;
     margin-top: 10px;
-    color: var(--color-orange);
-    font-size: 1.1rem;
 }
 
 #scoreTable {
+    font-family: 'SFMono', monospace;
+    color: var(--color-orange);
     display: flex;
     justify-content: space-between;
-    color: var(--color-orange);
     width: 500px;
     margin-top: 2rem;
 }
 #scoreTable table {
+    font-family: 'SFMono', monospace;
+    font-size: 1rem;
     width: 100%;
     border-collapse: collapse;
-    font-family: 'Courier New', monospace;
-    font-size: 1rem;
 }
 
 #scoreTable caption {
@@ -105,4 +105,15 @@ pre {
 #scoreTable td {
     padding: 5px;
     text-align: left;
+}
+
+.title {
+    font-family: 'SF Mono', monospace;
+    font-style: italic;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.title a {
+    color: var(--color-green);
 }
