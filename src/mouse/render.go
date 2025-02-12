@@ -18,27 +18,67 @@ func (g *Game) drawGameOver() {
 	g.Context.Set("fillStyle", "white")
 
 	// Draw "GAME OVER" title.
-	g.Context.Set("font", "bold 48px")
+	g.Context.Set("font", "bold 48px 'Courier New', monospace")
 	titleX := float64(g.Width)/2 - 150
-	titleY := float64(g.Height) / 2.7
+	titleY := float64(g.Height) / 3.3
 	g.Context.Call("fillText", "GAME OVER", titleX, titleY)
 
 	// Draw current score.
-	g.Context.Set("font", "36px")
-	scoreText := fmt.Sprintf("Your Score: %d", g.Score)
-	g.Context.Call("fillText", scoreText, titleX, float64(g.Height)/2.5+70)
+	g.Context.Set("font", "30px 'Courier New', monospace")
+	scoreText := fmt.Sprintf("YOUR SCORE: %d", g.Score)
+	g.Context.Call("fillText", scoreText, titleX, float64(g.Height)/2.5+50)
 
 	// Draw best score.
-	highScoreText := fmt.Sprintf("Best Score: %d", g.TopScore)
-	g.Context.Call("fillText", highScoreText, titleX, float64(g.Height)/2.5+130)
+	highScoreText := fmt.Sprintf("BEST SCORE: %d", g.TopScore)
+	g.Context.Call("fillText", highScoreText, titleX, float64(g.Height)/2.5+90)
 
 	// Draw restart instruction.
-	g.Context.Set("font", "22px")
-	restartText := "To restart, press R"
+	g.Context.Set("font", "20px 'Courier New', monospace")
+	restartText := "press 'R' to restart"
 	// Center the text by calculating an approximate x position.
 	restartX := float64(g.Width)/2 - 150
 	restartY := float64(g.Height)/2.5 + 190
 	g.Context.Call("fillText", restartText, restartX, restartY)
+}
+
+// Fetches the score_table.json file and renders the score table
+func (g *Game) renderScoreTable() {
+	fetchPromise := js.Global().Call("fetch", "score_table.json")
+	thenFunc := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		response := args[0]
+		jsonPromise := response.Call("json")
+		thenJSON := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+			data := args[0]
+			// Sort the data array in descending order by score.
+			data = data.Call("sort", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+				a := args[0]
+				b := args[1]
+				return b.Get("score").Int() - a.Get("score").Int()
+			}))
+
+			// Build the HTML table.
+			tableHTML := "<table border='0' cellpadding='5' cellspacing='0'><caption>BEST EVER 5</caption><tbody>"
+			length := data.Length()
+			if length > 5 {
+				length = 5
+			}
+			for i := 0; i < length; i++ {
+				entry := data.Index(i)
+				name := entry.Get("name").String()
+				score := entry.Get("score").Int()
+				tableHTML += fmt.Sprintf("<tr><td>%s</td><td style='text-align: right'>%d</td></tr>", name, score)
+			}
+			tableHTML += "</tbody></table>"
+
+			// Set the inner HTML of the scoreTable div.
+			scoreTableDiv := js.Global().Get("document").Call("getElementById", "scoreTable")
+			scoreTableDiv.Set("innerHTML", tableHTML)
+			return nil
+		})
+		jsonPromise.Call("then", thenJSON)
+		return nil
+	})
+	fetchPromise.Call("then", thenFunc)
 }
 
 func (g *Game) render() {
@@ -76,7 +116,12 @@ func (g *Game) render() {
 	}
 
 	// If game over, overlay the Game Over screen.
+	// if g.gameOver {
+	// 	g.drawGameOver()
+	// }
 	if g.gameOver {
 		g.drawGameOver()
+	} else {
+		g.renderScoreTable()
 	}
 }

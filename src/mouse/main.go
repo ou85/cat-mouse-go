@@ -4,6 +4,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"syscall/js"
 )
 
@@ -48,6 +49,15 @@ func NewGame() *Game {
 		Score:    0,
 		TopScore: 0,
 	}
+
+	// Retrieve saved top score from localStorage.
+	storedTS := js.Global().Get("localStorage").Call("getItem", "topScore").String()
+	if storedTS != "" {
+		if ts, err := strconv.Atoi(storedTS); err == nil {
+			game.TopScore = ts
+		}
+	}
+
 	game.spawnCat()
 	game.spawnCheese()
 	return game

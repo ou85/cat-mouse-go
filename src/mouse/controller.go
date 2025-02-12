@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
 	"syscall/js"
@@ -125,6 +126,7 @@ func (g *Game) checkCheeseCollision() {
 	g.Score++
 	if g.Score > g.TopScore {
 		g.TopScore = g.Score
+		js.Global().Get("localStorage").Call("setItem", "topScore", fmt.Sprintf("%d", g.TopScore))
 	}
 	g.Cheese = NewCheese(g.Width, g.Height)
 }

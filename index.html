@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat and Mouse</title>
+    <title>LOCALHOST</title>
     <link rel="stylesheet" href="static/styles.css">
     <link rel="icon" href="data:image/svg+xml, <svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 36 36%22>
-        <text y=%2232%22 font-size=%2232%22>🐭</text></svg>" type="image/svg+xml">
+        <text y=%2232%22 font-size=%2232%22>🍉</text></svg>" type="image/svg+xml">
 </head>
 <header>
     <a href="random.html">random</a>
@@ -17,9 +17,11 @@
             <div id="score"></div>
             <div id="topScore"></div>
         </div>
-        <canvas id="myCanvas" width="450" height="450"></canvas>
+        <canvas id="myCanvas" width="600" height="400"></canvas>
+        <div id="scoreTable"></div>
     </main>
     <script src="wasm_exec.js"></script>
+    <!-- WebAssembly script -->
     <script>
         const go = new Go();
         WebAssembly.instantiateStreaming(fetch("mouse.wasm"), go.importObject).then((result) => {

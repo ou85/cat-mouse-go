@@ -75,8 +75,34 @@ pre {
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
-    width: 450px;
+    width: 600px;
     margin-top: 10px;
     color: var(--color-orange);
     font-size: 1.1rem;
+}
+
+#scoreTable {
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-orange);
+    width: 500px;
+    margin-top: 2rem;
+}
+#scoreTable table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+}
+
+#scoreTable caption {
+    font-size: 1.1rem;
+    color: var(--color-orange);
+    margin-bottom: 0.5rem;
+}
+
+#scoreTable th,
+#scoreTable td {
+    padding: 5px;
+    text-align: left;
 }
